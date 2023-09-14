@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MovieResponse, MovieResult, fetchRequest } from "../common/api";
-import { ENDPOINT } from "../common/endpoints";
 import ChevronLeftIcon from "@heroicons/react/24/outline/ChevronLeftIcon";
 import ChevronRightIcon from "@heroicons/react/24/outline/ChevronRightIcon";
 import PageIndicator from "./page-indicator";
@@ -79,7 +78,7 @@ function ContentRow({ title, endpoint }: RowProp) {
 
   return (
     <section className="row-container ml-12 hover:cursor-pointer">
-      <h2 className="mb-2">{title}</h2>
+      <h2 className="text-xl">{title}</h2>
       <PageIndicator
         className="mb-4 opacity-0 transition-opacity delay-300 ease-in"
         pagesCount={pagesCount}
@@ -88,7 +87,7 @@ function ContentRow({ title, endpoint }: RowProp) {
       {/* className is also prop - not css  */}
       <section
         ref={containerRef}
-        className="relative flex flex-nowrap gap-2 overflow-hidden "
+        className="relative mb-8 flex flex-nowrap gap-2 overflow-hidden "
       >
         {!disabelPrev ? (
           <button
@@ -112,7 +111,13 @@ function ContentRow({ title, endpoint }: RowProp) {
           className="flex gap-2 transition-transform duration-700 ease-linear"
         >
           {rowData?.map((row) => {
-            return <MovieCard key={row.id} {...row} />;
+            return (
+              <MovieCard
+                uid={`$(row.id}-${title}`}
+                key={`$(row.id}-${title}`}
+                {...row}
+              />
+            );
           })}
         </section>
       </section>

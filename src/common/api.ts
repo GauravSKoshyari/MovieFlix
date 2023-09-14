@@ -3,6 +3,8 @@
 // one of api link-  https://api.themoviedb.org/3/movie/{movie_id}
 // u can pass query params also -> https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
 
+import { ENDPOINT } from "./endpoints"
+
 // this is type for each element in results arary of below MovieResponse
 export type MovieResult=  {
     adult: boolean
@@ -32,6 +34,7 @@ export type MovieResult=  {
     [k: string]: unknown
   }
 
+
 export async function fetchRequest<T>(endpoint:string){
     const url = new URL(endpoint , import.meta.env.VITE_BASE_API);
     url.searchParams.append("api_key",import.meta.env.VITE_API_KEY);
@@ -42,3 +45,36 @@ export async function fetchRequest<T>(endpoint:string){
 }
 
 // todo: take a note - promise with typescript
+
+// https://developer.themoviedb.org/reference/movie-videos
+// https://api.themoviedb.org/3/movie/{movie_id}/videos
+// getting these types -> using thunderclient , get ur json  output  -> get Schema from jsonhero -> use transform.tools to convert schema to ts interface/type
+export type MovieVideoResult<T> = {
+    id: number;
+    results: T;
+    [k: string]: unknown;
+  };
+  
+  export type MovieVideoInfo = {
+    iso_639_1: string;
+    iso_3166_1: string;
+    name: string;
+    key: string;
+    site: string;
+    size: number;
+    type: string;
+    official: boolean;
+    published_at: string;
+    id: string;
+    [k: string]: unknown;
+  };
+
+
+export async function fetchVideoInfo(id : string) {
+    const response = await fetchRequest<MovieVideoResult<MovieVideoInfo[]>>(
+      ENDPOINT.MOVIES_VIDEO.replace("{movie_id}", id),
+    );
+    return response.results.filter(
+      (result) => result.site.toLowerCase() === "youtube",
+    );
+  }

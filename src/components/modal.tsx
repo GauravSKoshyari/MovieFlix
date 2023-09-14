@@ -2,6 +2,7 @@ import React, { ReactElement, useRef } from "react";
 
 import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { Position } from "../common/types";
 
 type ModalProps = {
   isOpen: boolean;
@@ -9,6 +10,7 @@ type ModalProps = {
   closeModal: () => void;
   children: React.ReactElement;
   title: string | ReactElement;
+  position?: Position | null;
 };
 
 export default function Modal({
@@ -17,11 +19,10 @@ export default function Modal({
   title,
   children,
   closeModal,
+  position,
 }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   function onMouseLeave() {
-    console.log("mouse leave");
-
     closeModal();
   }
   return (
@@ -40,7 +41,7 @@ export default function Modal({
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0  overflow-y-auto">
           <div className="flex min-h-full items-center justify-center text-center">
             <Transition.Child
               as={Fragment}
@@ -61,14 +62,9 @@ export default function Modal({
             >
               <Dialog.Panel
                 ref={panelRef}
-                className="bg-dark w-full max-w-md transform overflow-hidden rounded-2xl  text-left align-middle shadow-xl transition-all"
+                className="bg-dark w-[300px] max-w-md transform overflow-hidden  rounded-2xl text-left align-middle shadow-xl transition-all"
+                style={position ? { position: "fixed", ...position } : {}}
               >
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-white"
-                >
-                  {title}
-                </Dialog.Title>
                 {children}
               </Dialog.Panel>
             </Transition.Child>
