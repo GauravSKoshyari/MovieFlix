@@ -30,6 +30,7 @@ function AppRouter() {
           }
         >
           <Route index element={<Profile />} />
+          <Route path="ManageProfiles" element={<Profile edit />} />
           <Route path="/browse" element={<Layout />}>
             <Route index element={<Browse />} />
           </Route>

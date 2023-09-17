@@ -7,7 +7,7 @@ import { Position } from "../common/types";
 type ModalProps = {
   isOpen: boolean;
   onClose: (value: boolean) => void;
-  closeModal: () => void;
+  closeModal?: () => void;
   children: React.ReactElement;
   title: string | ReactElement;
   position?: Position | null;
@@ -23,7 +23,9 @@ export default function Modal({
 }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   function onMouseLeave() {
-    closeModal();
+    if (closeModal) {
+      closeModal();
+    }
   }
   return (
     // Use the `Transition` component at the root level
@@ -56,13 +58,15 @@ export default function Modal({
               }}
               // once dialog panel is opened , we add this eventlistener(if we move mouse out of panel , it should close )
 
+              // todos : same code for afterEnter & afterLeave
+
               afterLeave={() => {
                 panelRef.current?.addEventListener("mouseleave", onMouseLeave);
               }}
             >
               <Dialog.Panel
                 ref={panelRef}
-                className="bg-dark w-[300px] max-w-md transform overflow-hidden  rounded-2xl text-left align-middle shadow-xl transition-all"
+                className=" transform overflow-hidden rounded-2xl  bg-dark text-left align-middle shadow-xl transition-all"
                 style={position ? { position: "fixed", ...position } : {}}
               >
                 {children}
