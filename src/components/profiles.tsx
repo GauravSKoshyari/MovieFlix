@@ -55,7 +55,7 @@ function ProfileButton({
 }: {
   buttonType?: "primary" | "secondary";
 } & React.HTMLAttributes<HTMLButtonElement>) {
-  // todos :  React.HtmlHTMLAttributes<HTMLButtonElement>  -> attributes that u can assign to any button
+  // todos :  React.HTMLAttributes<HTMLButtonElement>  -> attributes that u can assign to any button
 
   return (
     <button

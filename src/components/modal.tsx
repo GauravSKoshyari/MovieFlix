@@ -63,7 +63,12 @@ export default function Modal({
               afterLeave={() => {
                 panelRef.current?.addEventListener("mouseleave", onMouseLeave);
               }}
+              // it might be removeEventlistener   : todos
             >
+              {/* afterEnter : Callback which is called after we finished the enter transition. */}
+              {/* afterLeave : Callback which is called after we finished the leave transition. */}
+              {/* https://headlessui.com/react/transition */}
+
               <Dialog.Panel
                 ref={panelRef}
                 className=" transform overflow-hidden rounded-2xl  bg-dark text-left align-middle shadow-xl transition-all"
@@ -78,3 +83,9 @@ export default function Modal({
     </Transition>
   );
 }
+
+// from documentation:
+// to show and hide your dialog, pass React state into the 'open' prop. When 'open' is true the dialog will render, and when it's false the dialog will unmount.
+// The 'onClose' callback fires when an open dialog is dismissed, which happens when the user clicks outside the your Dialog.Panel or presses the Escape key. You can use this callback to set 'open' back to false and close your dialog.
+// When using <Transition> with your dialogs, you can remove the 'open' prop, as the dialog will read the 'show' state from the <Transition> automatically.
+// Style the Dialog and Dialog.Panel components using the 'className' or 'style' props like you would with any other element
