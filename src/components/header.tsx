@@ -21,6 +21,7 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", onWindowScroll);
     () => window.removeEventListener("scroll", onWindowScroll);
+    // todos : i think 'return' keyword should be used in 2nd statement
   }, []);
   return (
     <header

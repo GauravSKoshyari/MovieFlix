@@ -55,8 +55,6 @@ function ProfileButton({
 }: {
   buttonType?: "primary" | "secondary";
 } & React.HTMLAttributes<HTMLButtonElement>) {
-  // todos :  React.HTMLAttributes<HTMLButtonElement>  -> attributes that u can assign to any button
-
   return (
     <button
       {...props}
@@ -66,7 +64,6 @@ function ProfileButton({
           : "border border-white text-gray-400 hover:text-white"
       } px-4 py-2 text-xl ${props.className}`}
     >
-      {/* todos - props.className */}
       {props.children}
     </button>
   );
@@ -82,6 +79,7 @@ function ProfileCard({
   return (
     <section className="flex cursor-pointer flex-col place-items-center gap-2 text-gray-400 hover:text-white">
       <section className="relative h-[10vw] max-h-[200px] min-h-[84px] w-[10vw] min-w-[84px] max-w-[200px] overflow-hidden rounded-md hover:border-4 hover:border-gray-100">
+        {/* image in public folder  */}
         <img src="/netflix-profile-picture.jpg" alt="User profile image" />
         {edit ? (
           <button
@@ -109,13 +107,13 @@ function AddProfile() {
 
 function EditProfile(props: {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  onClose: () => void;
   title: string;
   edit?: boolean;
 }) {
   const heading = props.edit ? "Edit Profile" : "Add Profile";
   function cancelEdit() {
-    props.onClose(false);
+    props.onClose();
   }
   return (
     <Modal {...props}>

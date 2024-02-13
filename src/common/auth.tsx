@@ -31,8 +31,6 @@ type AuthContextType = ReturnType<typeof useProvideAuth>;
 // AuthContextType  is of type , whatever is returned by useProvideAuth
 // hover over it to check it
 
-// todos : ReturnType
-
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({
@@ -45,7 +43,7 @@ export const AuthProvider = ({
 };
 
 function useProvideAuth() {
-  // User(rhs) is coming from firebase/auth
+  // User(rhs) is coming/imported from firebase/auth
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -58,6 +56,7 @@ function useProvideAuth() {
       unsubscribe();
     };
   }, []);
+  // Runs only in first render
 
   const signUp = (email: string, password: string) =>
     createUserWithEmailAndPassword(auth, email, password).then(({ user }) => {
@@ -71,6 +70,7 @@ function useProvideAuth() {
       return user;
     });
   const signOutUser = signOut(auth).then(() => setUser(null));
+  //TODOS:   shouldn't this be function like signIn & signUp
 
   return { signUp, signIn, signOut: signOutUser, user };
 }

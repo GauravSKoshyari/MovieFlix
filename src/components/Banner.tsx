@@ -45,7 +45,7 @@ export default function Banner() {
     setrandomMovie(randomSelection);
     setTimeout(() => {
       setHidePoster(true);
-    }, 800);
+    }, 1500);
   }
 
   useEffect(() => {
@@ -79,6 +79,7 @@ export default function Banner() {
             hidePoster ? "visible h-full" : "invisible h-0"
           } absolute z-[1] -mt-14`}
           onStateChange={onStateChange}
+          // This event fires whenever the player's state changes
         />
       ) : null}
       {showBackdrop ? (

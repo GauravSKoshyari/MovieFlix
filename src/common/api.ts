@@ -5,7 +5,7 @@
 
 import { ENDPOINT } from "./endpoints"
 
-// this is type for each element in results arary of below MovieResponse
+// this is type for each element in 'results' arary of below MovieResponse
 export type MovieResult=  {
     adult: boolean
     backdrop_path: string
@@ -24,8 +24,9 @@ export type MovieResult=  {
     [k: string]: unknown
   }
 
-//   https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=01a290c8709cdf55939b8d063e463997&region=IN
-// output of this 
+  // output of this  :  https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=01a290c8709cdf55939b8d063e463997&region=IN
+  // https://developer.themoviedb.org/reference/movie-popular-list
+// get  json  output  -> get Schema from jsonhero -> use transform.tools to convert schema to ts interface/type
   export interface MovieResponse<T> {
     page: number
     results: T
@@ -48,7 +49,7 @@ export async function fetchRequest<T>(endpoint:string){
 
 // https://developer.themoviedb.org/reference/movie-videos
 // https://api.themoviedb.org/3/movie/{movie_id}/videos
-// getting these types -> using thunderclient , get ur json  output  -> get Schema from jsonhero -> use transform.tools to convert schema to ts interface/type
+// getting these types ->  get  json  output  -> get Schema from jsonhero -> use transform.tools to convert schema to ts interface/type
 export type MovieVideoResult<T> = {
     id: number;
     results: T;
@@ -75,6 +76,6 @@ export async function fetchVideoInfo(id : string) {
       ENDPOINT.MOVIES_VIDEO.replace("{movie_id}", id),
     );
     return response.results.filter(
-      (result) => result.site.toLowerCase() === "youtube",
+      (result) => result.site.toLowerCase() === "youtube" && result.type.toLowerCase() === "trailer",
     );
   }

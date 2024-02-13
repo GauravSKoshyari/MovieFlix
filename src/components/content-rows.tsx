@@ -77,6 +77,7 @@ function ContentRow({ title, endpoint }: RowProp) {
   }, []);
 
   return (
+    // check row-container in index.css
     <section className="row-container ml-12 hover:cursor-pointer">
       <h2 className="text-xl">{title}</h2>
       <PageIndicator
@@ -84,10 +85,10 @@ function ContentRow({ title, endpoint }: RowProp) {
         pagesCount={pagesCount}
         currentPage={currentPage}
       />
-      {/* className is also prop - not css  */}
+      {/* above className is also prop - not css  */}
       <section
         ref={containerRef}
-        className="relative mb-8 flex flex-nowrap gap-2 overflow-hidden "
+        className="relative mb-8 flex  gap-2 overflow-hidden "
       >
         {!disabelPrev ? (
           <button
@@ -108,7 +109,7 @@ function ContentRow({ title, endpoint }: RowProp) {
         ) : null}
         <section
           ref={sliderRef}
-          className="flex gap-2 transition-transform duration-700 ease-linear"
+          className="flex flex-nowrap gap-2 transition-transform duration-700 ease-linear"
         >
           {rowData?.map((row) => {
             return (

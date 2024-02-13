@@ -40,7 +40,7 @@ export default function MovieCard({
       left = calculatedPosition?.left as number;
     }
 
-    // 400 is width of youtube dialog - check below , we r taking slightly larger value
+    // 300 is width of youtube dialog - check below , we r taking slightly larger value
     let totalWidth = left + 350;
     // when dialog is going outside window
     if (totalWidth > document.body.clientWidth) {
@@ -66,9 +66,10 @@ export default function MovieCard({
     }
   }, [videoInfo, isOpen]);
 
-  function onClose(value: boolean) {
-    setisOpen(value);
+  function onClose() {
+    setisOpen(false);
   }
+  // don't think there is need of both  : todos
   function closeModal() {
     setisOpen(false);
   }

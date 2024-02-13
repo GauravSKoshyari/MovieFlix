@@ -1,12 +1,12 @@
 import React, { ReactElement, useRef } from "react";
 
-import { useState, Fragment } from "react";
+import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Position } from "../common/types";
 
 type ModalProps = {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  onClose: () => void;
   closeModal?: () => void;
   children: React.ReactElement;
   title: string | ReactElement;
@@ -28,7 +28,7 @@ export default function Modal({
     }
   }
   return (
-    // Use the `Transition` component at the root level
+    // When using <Transition> with your dialogs, you can remove the 'open' prop, as the dialog will read the 'show' state from the <Transition> automatically.
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
@@ -42,6 +42,7 @@ export default function Modal({
         >
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
+        {/* this is backdrop(on full screen) */}
 
         <div className="fixed inset-0  overflow-y-auto">
           <div className="flex min-h-full items-center justify-center text-center">
@@ -58,12 +59,12 @@ export default function Modal({
               }}
               // once dialog panel is opened , we add this eventlistener(if we move mouse out of panel , it should close )
 
-              // todos : same code for afterEnter & afterLeave
-
               afterLeave={() => {
-                panelRef.current?.addEventListener("mouseleave", onMouseLeave);
+                panelRef.current?.removeEventListener(
+                  "mouseleave",
+                  onMouseLeave,
+                );
               }}
-              // it might be removeEventlistener   : todos
             >
               {/* afterEnter : Callback which is called after we finished the enter transition. */}
               {/* afterLeave : Callback which is called after we finished the leave transition. */}

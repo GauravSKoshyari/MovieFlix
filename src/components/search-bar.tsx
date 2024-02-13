@@ -3,19 +3,22 @@ import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 
 export default function SearchBar() {
   const [open, setOpen] = useState(false);
-  const strokeWidth = { strokeWidth: ".rem" };
+  const strokeWidth = { strokeWidth: ".07rem" };
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // todos: globalThis - take a note
   //   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
   // The globalThis property provides a standard way of accessing the global this value (and hence the global object itself) across environments.
   function handleOutsideClick(event: globalThis.MouseEvent) {
     if ((event.target as HTMLInputElement).id !== "searchbar") {
       // if id of elment on which u click is "searchbar"(line 50) , don't setOpen(false)
+      // If the condition is true, meaning that the click occurred outside the element with the id "searchbar"
       setOpen(false);
     }
   }
 
   //MouseEvent is import at line 1 - important
+  // if  u don't want to use import statement -> use React.MouseEvent
   function toggleSearch(event: MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
     if (!open) {
@@ -38,7 +41,7 @@ export default function SearchBar() {
       </button>
       <section
         className={`${
-          open ? "animate-slide-rtl w-full border border-white p-1" : "w-0"
+          open ? "w-full animate-slide-rtl border border-white p-1" : "w-0"
         } flex items-center gap-2 bg-dark `}
       >
         <button className="h-8 w-8">
