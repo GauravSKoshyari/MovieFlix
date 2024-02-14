@@ -44,13 +44,20 @@ export const AuthProvider = ({
 
 function useProvideAuth() {
   // User(rhs) is coming/imported from firebase/auth
-  const [user, setUser] = useState<User | null>(null);
+
+  // current user is null when
+  // 1- firebase is still fetching information which it does  asynchronously
+  // 2-when the user is logged out
+
+  // 'not null or User' when user is logged in
+  const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
-    // onAuthStateChanged - detects if there are any changes to user object
+    // onAuthStateChanged gets fired once firebase is done fetching current user information
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // when there are any changes , we update user
-      user ? setUser(user) : setUser(null);
+      setloading(false);
+      setUser(user);
     });
     return () => {
       unsubscribe();
@@ -60,19 +67,16 @@ function useProvideAuth() {
 
   const signUp = (email: string, password: string) =>
     createUserWithEmailAndPassword(auth, email, password).then(({ user }) => {
-      setUser(user);
       return user;
     });
 
   const signIn = (email: string, password: string) =>
     signInWithEmailAndPassword(auth, email, password).then(({ user }) => {
-      setUser(user);
       return user;
     });
-  const signOutUser = signOut(auth).then(() => setUser(null));
-  //TODOS:   shouldn't this be function like signIn & signUp
+  const signOutUser = () => signOut(auth);
 
-  return { signUp, signIn, signOut: signOutUser, user };
+  return { signUp, signIn, signOut: signOutUser, user, loading };
 }
 
 export const useAuth = () => useContext(AuthContext) ?? ({} as AuthContextType);

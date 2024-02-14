@@ -1,20 +1,12 @@
-import { useEffect } from "react";
 import netflixLogo from "../assets/Netflix_Logo_RGB.png";
 import { useAuth } from "../common/auth";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
-  const { signIn, user } = useAuth();
+export default function Registration() {
+  const { signUp } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // if there are some changes to user and user is there , navigate to profile page
-    if (user) {
-      navigate("/");
-    }
-  }, [user]);
-
-  async function authenticateUser(event: React.SyntheticEvent) {
+  async function registerUser(event: React.SyntheticEvent) {
     //  NOTE:  React uses synthetic events to abstract away the differences between different browsers' native event implementations and provide a consistent interface for handling events across all supported browsers.
 
     event.preventDefault(); //prevents the default behavior of the form submission. By calling preventDefault(), it stops the browser from performing its default action, which in this case would be to submit the form and refresh the page.
@@ -25,10 +17,8 @@ export default function Login() {
       password: HTMLInputElement;
     };
 
-    const user = await signIn(email.value, password.value);
-    if (user) {
-      navigate("/");
-    }
+    await signUp(email.value, password.value);
+    navigate("/login");
   }
 
   return (
@@ -42,11 +32,11 @@ export default function Login() {
         ></section>
         <section className="absolute inset-0 bg-gradient-to-b from-zinc-900/50"></section>
         <form
-          onSubmit={authenticateUser}
+          onSubmit={registerUser}
           className="relative mx-auto  w-[350px] rounded-r-lg bg-black/75 p-16 "
         >
           <article className="text-gray-300 ">
-            <h1 className="mb-4 text-4xl text-white">Sign In</h1>
+            <h1 className="mb-4 text-4xl text-white">Sign up</h1>
             <section className="flex flex-col gap-4">
               <input
                 className="rounded-md bg-zinc-500 p-2 outline-none"
@@ -63,13 +53,13 @@ export default function Login() {
                 placeholder="Enter password"
               />
               <button className="my-8 rounded-md bg-netflixRed p-2 font-semibold text-white outline-none">
-                Sign In
+                Sign up
               </button>
             </section>
             <p>
-              New to Netflix?{" "}
+              Already have an account?{" "}
               <Link className="text-white" to="/signup">
-                Sign up now
+                Sign in now
               </Link>
             </p>
           </article>
