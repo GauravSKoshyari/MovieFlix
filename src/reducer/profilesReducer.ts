@@ -15,6 +15,7 @@ export default function profilesReducer(state:ProfilesContextType,action:ActionT
             const updateState:ProfilesContextType = {profiles:updatedProfiles, selectedProfileId : state?.selectedProfileId}
 
             return updateState;
+            break
         }
 
         case "edit":{
@@ -28,7 +29,7 @@ export default function profilesReducer(state:ProfilesContextType,action:ActionT
                 })
                 return updatedState ; 
             }
-            
+            break
         }
 
         case "delete":{
@@ -38,6 +39,7 @@ export default function profilesReducer(state:ProfilesContextType,action:ActionT
 
                 return updatedState
             }
+            break
         }
 
         case "current":{
@@ -45,6 +47,7 @@ export default function profilesReducer(state:ProfilesContextType,action:ActionT
                 let updatedState : ProfilesContextType ={...state , selectedProfileId:payload.id as string};
                 return updatedState;
             }
+            break
         }
         case "load":{
             return payload;

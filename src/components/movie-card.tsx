@@ -87,7 +87,6 @@ export default function MovieCard({
         />
       </section>
       <Modal
-        title={""}
         isOpen={isOpen}
         key={id}
         onClose={onClose}

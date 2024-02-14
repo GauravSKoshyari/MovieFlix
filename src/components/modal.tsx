@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from "react";
+import React, { useRef } from "react";
 
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -9,14 +9,12 @@ type ModalProps = {
   onClose: () => void;
   closeModal?: () => void;
   children: React.ReactElement;
-  title: string | ReactElement;
   position?: Position | null;
 };
 
 export default function Modal({
   isOpen,
   onClose,
-  title,
   children,
   closeModal,
   position,

@@ -13,7 +13,7 @@ export default function PageIndicator({
     >
       {Array(pagesCount)
         .fill(0)
-        .map((page, index) => (
+        .map((_, index) => (
           <li
             className={`h-[2px] w-3 ${
               currentPage == index ? "bg-gray-100" : "bg-gray-600"
